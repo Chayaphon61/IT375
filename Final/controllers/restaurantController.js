@@ -1,12 +1,12 @@
-const Restaurant = require('./../models/restaurantModel');
+const Finals = require('./../models/restaurantModel');
 exports.getAllRestaurants =async(req,res) => {
     try {
-        const restaurants = await Restaurant.find();
-        res.status(200).render("main",
+        const finals = await Finals.find();
+        res.status(200).json(
             {
         status:'success',
-        results: restaurants.length,
-        data: {restaurants}
+        results: finals.length,
+        data: {finals}
         });
         }catch (err){
         res.status(404).json({
@@ -17,11 +17,11 @@ exports.getAllRestaurants =async(req,res) => {
 exports.getRestaurant = async(req, res) => {
     try{
         const restaurantId = parseInt(req.params.id);
-        const restaurant = await Restaurant.findOne({id: restaurantId});
-        if(restaurant){
+        const finals = await Finals.findOne({id: restaurantId});
+        if(finals){
         res.status(200).json({
         status:'success',
-        data: {restaurant}
+        data: {finals}
         });
         }else{
         res.status(404).json({
@@ -44,7 +44,7 @@ exports.createRestaurant = async(req,res) => {
     status:'success',
     data: {restaurant: newRestaurant}
     });*/
-    let currentRestaurantId = await Restaurant.find({}).sort({id: -1}).limit(1).then((lastRestaurant) => {
+    let currentRestaurantId = await Finals.find({}).sort({id: -1}).limit(1).then((lastRestaurant) => {
         return lastRestaurant[0].id
 
     });
@@ -53,10 +53,10 @@ const creatRestaurant = {
 id: currentRestaurantId,
 ...req.body
 };
-const newRestaurant = await Restaurant.create(creatRestaurant);
+const newRestaurant = await Finals.create(creatRestaurant);
 res.status(201).json({
 status:'success',
-data: {restaurant: newRestaurant}
+data: {finals: newRestaurant}
 });
     }catch(err){
     res.status(400).json({
@@ -69,14 +69,14 @@ data: {restaurant: newRestaurant}
 exports.updateRestaurant = async(req,res) => {
     try{
         const restaurantId = parseInt(req.params.id);
-        const restaurant = await Restaurant.findOneAndUpdate({id: restaurantId},req.body,{
+        const finals = await Finals.findOneAndUpdate({id: restaurantId},req.body,{
         new: true,
         runValidators: true
         });
-        if(restaurant){
+        if(finals){
         res.status(200).json({
         status:'success',
-        data: {restaurant}
+        data: {finals}
         });
         }else{
         res.status(404).json({
@@ -94,8 +94,8 @@ exports.updateRestaurant = async(req,res) => {
 exports.deleteRestaurant = async(req,res) => {
     try{
         const restaurantsId = parseInt(req.params.id);
-        const restaurant = await Restaurant.findOneAndDelete({id: parseInt(restaurantsId)});
-        if(restaurant){
+        const finals = await Finals.findOneAndDelete({id: parseInt(restaurantsId)});
+        if(finals){
         res.status(200).json({
         status:'success',
         data: null

@@ -5,5 +5,5 @@ name: String,
 imageURL: String,
 type: String
 });
-const Restaurant = mongoose.model('Restaurant',restaurantSchema);
-module.exports = Restaurant;
+const Finals = mongoose.model('Finals',restaurantSchema);
+module.exports = Finals;
